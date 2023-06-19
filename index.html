@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cliente Socket.IO</title>
+  <script src="https://cdn.socket.io/4.3.1/socket.io.min.js"></script>
+  <script>
+    // Conexión al servidor de Socket.IO
+    const socket = io('http://localhost:3000');
+
+    // Evento de conexión establecida
+    socket.on('connect', () => {
+      console.log('Conexión establecida con el servidor');
+    });
+
+    // Evento de recepción de mensaje del servidor
+    socket.on('mensaje', (msg) => {
+      console.log('Mensaje recibido del servidor: ' + msg);
+    });
+
+    // Enviar un mensaje al servidor cuando se envíe el formulario
+    function enviarMensaje() {
+      const mensaje = document.getElementById('mensaje').value;
+      socket.emit('mensaje', mensaje);
+      return false;
+    }
+  </script>
+</head>
+<body>
+  <h1>Cliente Socket.IO</h1>
+  <form onsubmit="return enviarMensaje()">
+    <input type="text" id="mensaje" placeholder="Escribe un mensaje" required>
+    <input type="submit" value="Enviar">
+  </form>
+</body>
+</html>
